@@ -133,7 +133,7 @@ void drawInterval() {
   graphScanData->Set(0);
 
   float data_min_x = -100;
-  //---- fix the 0 of the likelihood scan   
+  //---- fix the 0 of the likelihood scan
   minimum = 1000;
   for (std::map<double, double>::iterator it = x_y_map.begin(); it != x_y_map.end(); it++) {
     if ( it->second < minimum ) {
@@ -157,8 +157,8 @@ void drawInterval() {
 
 
   //manual limits for x
-  Double_t min_x=-2.;
-  Double_t max_x=2.;
+  Double_t min_x=-0.8;
+  Double_t max_x=0.7;
 
   //find intesection of LL with the two lines
   Double_t x_1_p=max_x;
@@ -211,7 +211,7 @@ void drawInterval() {
   std::cout << "Name:" <<std::endl;
   string name;
   std::cin >> name;
-
+ //string name="prova";
  auto *c1 = new TCanvas("c1","A Zoomed Graph",200,10,700,500);
  auto *hpx = new TH2F("hpx",("Zoomed likelihood scan "+name).c_str(),10,min_x,max_x,10,0,6.);
 
@@ -262,6 +262,6 @@ void drawInterval() {
 
 
 
-  c1->SaveAs(("Hbox_"+name+".png").c_str());
+ c1->SaveAs(("likelihood_"+name+"_Hq3.png").c_str());
 
 }

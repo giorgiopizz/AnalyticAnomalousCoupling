@@ -4,13 +4,13 @@
 
 //
 // Template from https://github.com/amassiro/CMSplots/tree/master/LikelihoodScan
-//
+//root -l W_HW_results/fit_deltaetajj.root Draw2D.cxx\(\"c_{W}\",\"c_{HW}\",\"k_my_1\",\"k_my_2\"\)
 
 
 #include "tdrstyle.C"
 
 
-void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::string xNameVar = "r1", std::string yNameVar = "r3" , int dimension = 2 , std::string cut = "1", int FillHighLL = 1,   float lumi = 15.2) {
+void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::string xNameVar = "r1", std::string yNameVar = "r3" , int dimension = 2 , std::string cut = "1", int FillHighLL = 1,   float lumi = 100) {
 
 
   gStyle->SetOptStat(0);
@@ -108,7 +108,18 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
   }
 
   graphScan->Draw("colz");
+  TLine *line1 = new TLine(0,0,0,0.0);
+  line1->SetLineWidth(2);
+  line1->SetLineStyle(2);
+  line1->SetLineColor(kRed);
+  line1->Draw("same");
 
+
+  TLine *line2 = new TLine(0,0,0,0.0);
+  line2->SetLineWidth(2);
+  line2->SetLineStyle(2);
+  line2->SetLineColor(kRed);
+  line2->Draw("same");
 
 
   TCanvas* cc2 = new TCanvas ("cc2","",800,600);
@@ -162,8 +173,8 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
   cross11->SetPoint(0,0,0);
   cross11->SetMarkerStyle(22);
   cross11->SetMarkerSize(2);
-  cross11->SetMarkerColor(kBlack);
-  cross11->SetLineColor(kBlack);
+  cross11->SetMarkerColor(kRed);
+  cross11->SetLineColor(kRed);
 
   cross11->Draw("P");
 
@@ -190,7 +201,7 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
   limit->GetEntry(0);
 
   std::cout << " min x,y = " << xmin << "  ,  " << ymin << std::endl;
-
+/*
   TGraph* crossMin = new TGraph();
   crossMin->SetPoint(0, xmin, ymin);
   crossMin->SetMarkerStyle(20);
@@ -199,7 +210,7 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
   crossMin->SetLineColor(kRed);
   crossMin->SetLineWidth(3);
 
-  crossMin->Draw("P");
+  crossMin->Draw("P");*/
 
   //   cc2->SetGrid();
 
@@ -209,7 +220,7 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
   leg->SetBorderSize(1);
   leg->AddEntry(gr_1sigma,"1 #sigma","l");
   leg->AddEntry(gr_2sigma,"2 #sigma","l");
-  leg->AddEntry(crossMin,"Best fit","P");
+ // leg->AddEntry(crossMin,"Best fit","P");
   leg->AddEntry(cross11,"SM","P");
   leg->Draw();
 
@@ -276,6 +287,7 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
 
 
 
+
   //---- fix Z-axis (begin)
   cc2->Update();
   //   TPaletteAxis *palette = (TPaletteAxis*) graphScan->GetListOfFunctions()->FindObject("palette");
@@ -293,7 +305,7 @@ void Draw2D(std::string xName = "r_{1}", std::string yName = "r_{3}", std::strin
   //---- fix Z-axis (end)
 
 
-  cc2->SaveAs("cc2.png");
+  cc2->SaveAs("likelihood2D_ptl2_W_HW.png");
 
 
 }
